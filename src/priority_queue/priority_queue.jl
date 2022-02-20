@@ -23,8 +23,9 @@ function pop_highest!(pq::PriorityQueue)
     value = pop!(pq.values)
     index = 1
     while (index * 2) <= length(pq.values)
-        child_index1, child_index2 = index * 2, index * 2 + 1
-        bigger_index = (child_index2 >= length(pq.values) || pq.values[child_index1] > pq.values[child_index2]) ? child_index1 : child_index2
+        cind1, cind2 = index * 2, index * 2 + 1
+        flag = (cind2 >= length(pq.values) || pq.values[cind1] > pq.values[cind2]) 
+        bigger_index = flag ? cind1 : cind2
         pq.values[bigger_index] <= value && break
         pq.values[index] = pq.values[bigger_index]
         index = bigger_index
@@ -36,4 +37,5 @@ end
 pop_lowest!(pq::PriorityQueue) = !isempty(pq.values) ? pop!(pq.values) : nothing
 highest(pq::PriorityQueue) = !isempty(pq.values) ? pq.values[1] : nothing
 lowest(pq::PriorityQueue) = !isempty(pq.values) ? pq.values[end] : nothing
+
 

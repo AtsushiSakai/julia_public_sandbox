@@ -1,6 +1,7 @@
 module mymodule
 
 using Test
+using Random
 
 include("priority_queue.jl")
 
@@ -29,7 +30,32 @@ function test2()
     @test lowest(pq) == nothing
 end
 
+function pq_benchmark()
+    pq = PriorityQueue{Int64, String}()
+    for i in 1:10000
+        push!(pq, Pair(rand(Int), "5"))
+    end
+    @show pop_highest!(pq).first
+end
+
+function sort_benchmark()
+    array = Pair{Int64, String}[]
+    for i in 1:10000
+        Base.push!(array, Pair(rand(Int), "5"))
+        sort!(array, by = x -> x.first)
+    end
+    @show array[end].first
+end
+
+function benchmark()
+    Random.seed!(1234)
+    @time pq_benchmark()
+    Random.seed!(1234)
+    @time sort_benchmark()
+end
+
 test1()
 test2()
+benchmark()
 
 end # module
