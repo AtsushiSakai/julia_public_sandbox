@@ -17,7 +17,7 @@ end
 function unite!(uf::UnionFind, x::Int, y::Int)
     x_root = root!(uf, x)
     y_root = root!(uf, y)
-    x_root == y_root && return false
+    x_root == y_root && return false  # these has already same root
     if uf.size[x_root] < uf.size[y_root] # union by size
         uf.parent[x_root] = y_root
         uf.size[y_root] += uf.size[x_root]
